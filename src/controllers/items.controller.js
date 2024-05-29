@@ -46,9 +46,24 @@ export const createItems = async (req, res, next) => {
     return res.status(500).send({ msg: 'Error creating Items' });
   }
 };
-export const updateItems = (req, res, next) => {
+export const updateItems = async (req, res, next) => {
   // write logic here
-  res.send('update items');
+  const { id } = req.params;
+  const { name, description, current_price, end_time, image_url } = req.body;
+  const imag_url = image_url ? image_url : null;
+  try {
+    const item = await Item.update(
+      id,
+      name,
+      description,
+      current_price,
+      end_time,
+      imag_url
+    );
+    res.send({ msg: 'Items update successfully done' });
+  } catch (error) {
+    return res.status(500).send({ msg: 'Error while updating item' });
+  }
 };
 
 export const deleteItemsById = (req, res, next) => {
