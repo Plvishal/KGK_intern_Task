@@ -14,7 +14,7 @@ const Notification = {
       'SELECT * FROM notifications WHERE user_id = ?',
       [user_id]
     );
-    return rows;
+    return rows[0];
   },
 
   markAsRead: async (user_id) => {
