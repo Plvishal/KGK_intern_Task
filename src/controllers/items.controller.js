@@ -1,10 +1,15 @@
 import Item from '../models/item.model.js';
 
-export const getAllItems = (req, res, next) => {
+export const getAllItems = async (req, res, next) => {
   // write logic here
-  const {} = req.body;
-  console.log(req.file);
-  res.send('get all items');
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
+  try {
+    const items = await Item.findAll(limit, offset);
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving item' });
+  }
 };
 export const getItemsById = (req, res, next) => {
   // write logic here
@@ -29,7 +34,6 @@ export const createItems = async (req, res, next) => {
       image_url,
       end_time
     );
-    console.log(item);
   } catch (error) {
     return res.status(500).send({ msg: 'Error creating Items' });
   }
