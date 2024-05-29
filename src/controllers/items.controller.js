@@ -28,7 +28,6 @@ export const createItems = async (req, res, next) => {
   const { name, description, starting_price, image_url, end_time } = req.body;
   const str_price = parseFloat(starting_price);
   const imag_url = req.file ? req.file.path : null;
-  console.log(imag_url, str_price, name);
 
   try {
     const itemName = await Item.findByName(name);
@@ -42,6 +41,7 @@ export const createItems = async (req, res, next) => {
       image_url,
       end_time
     );
+    res.status(200).send({ msg: 'Item created successfully' });
   } catch (error) {
     return res.status(500).send({ msg: 'Error creating Items' });
   }
@@ -66,7 +66,13 @@ export const updateItems = async (req, res, next) => {
   }
 };
 
-export const deleteItemsById = (req, res, next) => {
+export const deleteItemsById = async (req, res, next) => {
   // write logic here
-  res.send('delete all items By Id');
+  const { id } = req.params;
+  try {
+    const items = await Item.delete(id);
+    res.status(200).send({ msg: 'Item delete successfully' });
+  } catch (error) {
+    return res.status(500).send({ msg: 'Error while deleting the item' });
+  }
 };
