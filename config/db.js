@@ -1,10 +1,11 @@
 import mysql from 'mysql2';
-
+import dontenv from 'dotenv';
+dontenv.config();
 const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'kgk_task',
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
 });
 
 con.connect((err) => {
@@ -15,4 +16,4 @@ con.connect((err) => {
   console.log('Connected with the MySQL');
 });
 
-export { con };
+export default con.promise();
