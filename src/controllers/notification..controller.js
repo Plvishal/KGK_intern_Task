@@ -11,7 +11,20 @@ export const getNotication = async (req, res) => {
   }
 };
 
-export const markReadNotification = (req, res) => {};
+export const markReadNotification = async (req, res) => {
+  const user_id = req.user.id;
+  try {
+    await Notification.markAsRead(user_id);
+    res.json({ message: 'Notifications marked as read' });
+  } catch (err) {
+    res
+      .status(500)
+      .json({
+        message: 'Error marking notifications as read',
+        error: err.message,
+      });
+  }
+};
 // Admin
 export const createNotification = async (req, res) => {
   const user_id = req.user.id;
