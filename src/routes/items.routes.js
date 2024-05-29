@@ -20,9 +20,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 itemsRouter.route('/').get(verifyToken, getAllItems);
-itemsRouter.route('/:id').get(getItemsById);
-itemsRouter.route('/').post(upload.single('file'), createItems);
-itemsRouter.route('/:id').put(updateItems);
-itemsRouter.route('/:id').delete(deleteItemsById);
+itemsRouter.route('/:id').get(verifyToken, getItemsById);
+itemsRouter.route('/').post(verifyToken, upload.single('file'), createItems);
+itemsRouter.route('/:id').put(verifyToken, updateItems);
+itemsRouter.route('/:id').delete(verifyToken, deleteItemsById);
 
 export default itemsRouter;
