@@ -13,7 +13,7 @@ const Bid = {
     const [rows] = await con.query('SELECT * FROM bids WHERE item_id = ?', [
       item_id,
     ]);
-    return rows;
+    return rows[0];
   },
 };
 

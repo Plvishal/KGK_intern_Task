@@ -30,3 +30,16 @@ export const creaateBid = async (req, res) => {
     res.status(500).send({ message: 'Error placing bid', error: err.message });
   }
 };
+
+export const getBidsById = async (req, res) => {
+  const { itemId } = req.params;
+  try {
+    const item = await Bid.findByItemId(itemId);
+    if (!item) {
+      return res.status(404).send({ msg: " Items does't find in bid" });
+    }
+    res.send({ item });
+  } catch (error) {
+    return res.status(500).send('Server error');
+  }
+};
