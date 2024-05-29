@@ -31,7 +31,7 @@ export const createNotification = async (req, res) => {
   const { message, is_read } = req.body;
 
   try {
-    const notification = await Notification.create(user_id, message, is_read);
+    const notification = await Notification.create(user_id, message, is_read);    
     res.status(201).send({ msg: 'notification created' });
   } catch (error) {
     return res.status(500).send('Error while creating notification');
