@@ -15,6 +15,10 @@ const User = {
     ]);
     return rows[0];
   },
+  findById: async (id) => {
+    const [rows] = await con.query('SELECT * FROM users WHERE id= ?', [id]);
+    return rows[0];
+  },
 };
 
 export default User;
