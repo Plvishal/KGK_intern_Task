@@ -11,9 +11,17 @@ export const getAllItems = async (req, res, next) => {
     res.status(500).json({ message: 'Error retrieving item' });
   }
 };
-export const getItemsById = (req, res, next) => {
-  // write logic here
-  res.send('get all items By Id');
+export const getItemsById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const item = await Item.findById(id);
+    if (!item) {
+      return res.status(404).send({ msg: ' Item not found' });
+    }
+    res.status(200).send({ item });
+  } catch (error) {
+    return res.status(500).send({ msg: 'Retrieving error' });
+  }
 };
 export const createItems = async (req, res, next) => {
   // write logic here
